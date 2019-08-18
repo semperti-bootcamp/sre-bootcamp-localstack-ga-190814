@@ -1,0 +1,3 @@
+localstack_user: devops
+localstack_group: devops
+localstack_dir: /home/devops

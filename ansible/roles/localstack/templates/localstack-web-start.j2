@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd {{ localstack_dir }}/localstack
+
+su - {{ localstack_user}} -c 'echo "LocalStack Web Starting with $USER user"'
+su - {{ localstack_user }} -c 'localstack web &'

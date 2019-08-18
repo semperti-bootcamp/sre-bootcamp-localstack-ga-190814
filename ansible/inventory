@@ -1,0 +1,2 @@
+[localstack]
+sre-bootcamp-localstack-ga ansible_host=10.252.7.107

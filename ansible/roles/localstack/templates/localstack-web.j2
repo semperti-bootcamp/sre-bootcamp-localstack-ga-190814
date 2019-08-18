@@ -1,0 +1,10 @@
+[Unit]
+Description = LocalStack Web Up 
+After = network.target syslog.target
+
+[Service]
+ExecStart = {{ localstack_dir }}/localstack-web-start.sh
+StandardOutput = syslog
+
+[Install]
+WantedBy = multi-user.target

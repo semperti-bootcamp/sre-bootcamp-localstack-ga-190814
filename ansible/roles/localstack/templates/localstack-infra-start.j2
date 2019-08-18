@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd {{ localstack_dir }}/localstack
+
+su - {{ localstack_user}} -c 'echo "LocalStack Infra Starting with $USER user"'
+su - {{ localstack_user }} -c 'localstack start --host &'

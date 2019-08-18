@@ -1,0 +1,8 @@
+- name: Install OpenJDK 
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - java-{{ java_version }}-openjdk.x86_64
+    - java-{{ java_version }}-openjdk-devel.x86_64 
+  tags: java

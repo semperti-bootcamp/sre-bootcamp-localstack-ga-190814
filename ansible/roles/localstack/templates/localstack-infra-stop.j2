@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd {{ localstack_dir }}/localstack
+
+su - {{ localstack_user }} -c 'echo "LocalStack Infra Stoping with $USER user"'
+su - {{ localstack_user }} -c 'pkill -U $(grep {{ localstack_user }} /etc/passwd | cut -d: -f3) java'
+su - {{ localstack_user }} -c 'pkill -U $(grep {{ localstack_user }} /etc/passwd | cut -d: -f3) node'
+su - {{ localstack_user }} -c 'pkill -9 python'
+#su - {{ localstack_user }} -c 'pkill -U $(grep {{ localstack_user }} /etc/passwd | cut -d: -f3) python'

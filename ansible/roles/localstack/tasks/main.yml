@@ -1,0 +1,118 @@
+---
+- name: Install dependencies packages
+  yum:
+    name: ['epel-release', 'python', 'python-devel', 'python-pip', 'gcc', 'git', 'npm', 'java-1.8.0-openjdk', 'java-1.8.0-openjdk-devel']
+    state: present
+
+- name: Clone GitHub
+  git:
+    repo: 'https://github.com/localstack/localstack.git'
+    dest: '{{ localstack_dir }}/localstack'
+
+- name: Upgrade pip privilege
+  pip:
+    name: [ 'pip', 'setuptools'] 
+    state: latest
+    extra_args: --user
+
+- name: Upgrade pip non-privilege
+  pip:
+    name: pip
+    state: latest
+    extra_args: --user
+  become: yes
+  become_user: '{{ localstack_user }}'
+
+- name: Install pip localstack
+  pip:
+    name: localstack[full]
+    state: latest
+    extra_args: --user 
+
+#- name: Change sysctl for elasticsearch 
+#  lineinfile:
+#    path: /etc/sysctl.d/99-elastic.conf
+#    line: vm.max_map_count=262144
+#    create: yes
+  
+#- name: Set kenel parameter for elasticsearch
+#  command: sysctl -w vm.max_map_count=262144
+
+- name: Create file localstack infra systemd
+  template:
+    src: localstack-infra.j2 
+    dest: /usr/lib/systemd/system/localstack-infra.service
+
+- name: Create file localstack web systemd
+  template:
+    src: localstack-web.j2 
+    dest: /usr/lib/systemd/system/localstack-web.service
+
+- name: Create scripts start localstack infra
+  template: 
+    src: localstack-infra-start.j2
+    dest: "{{ localstack_dir }}/localstack-infra-start.sh"
+    mode: 0744
+    owner: "{{ localstack_user }}"
+    group: "{{ localstack_group }}"
+
+- name: Create scripts stop localstack infra
+  template: 
+    src: localstack-infra-stop.j2
+    dest: "{{ localstack_dir }}/localstack-infra-stop.sh"
+    mode: 0744
+    owner: "{{ localstack_user }}"
+    group: "{{ localstack_group }}"
+
+- name: Create script start localstack web
+  template:
+    src: localstack-web-start.j2
+    dest: "{{ localstack_dir }}/localstack-web-start.sh"
+    mode: 0744
+    owner: "{{ localstack_user }}"
+    group: "{{ localstack_group }}"
+
+- name: Start LocalStack Infra
+  systemd:
+    name: localstack-infra
+    state: started
+    enabled: true
+
+- name: Start LocalStack Web
+  systemd:
+    name: localstack-web
+    state: started
+    enabled: true
+
+- name: Check port LocalStack S3 is Open (4572/tcp)
+  wait_for:
+    host: localhost
+    port: 4572
+    delay: 30
+    timeout: 60
+
+- name: Check port LocalStack Web is Open (8080/tcp)
+  wait_for:
+    host: localhost
+    port: 8080
+    delay: 30
+    timeout: 60
+
+- name: Enable LocalStack Web Port
+  firewalld:
+    port: 8080/tcp
+    permanent: yes
+    state: enabled
+    
+- name: Enable LocalStack Infra Ports
+  firewalld:
+    port: 4500-4600/tcp
+    permanent: yes
+    state: enabled
+
+- name: Test from external host to LocalStack Web
+  wait_for:
+    host: "{{ ansible_host }}"
+    port: 8080
+    delay: 30
+    timeout: 60

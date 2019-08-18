@@ -1,0 +1,8 @@
+---
+- name: BootCamp LocalStack - Instalation with ansible playbooks 
+  hosts: localstack
+
+  roles:
+    - role: java
+    - role: maven
+    - role: localstack
