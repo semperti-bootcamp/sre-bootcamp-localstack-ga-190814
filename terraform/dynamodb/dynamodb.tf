@@ -12,7 +12,7 @@ provider "aws" {
     }
 }
 
-resource "aws_dynamodb_table" "bc_table" {
+resource "aws_dynamodb_table" "BootCampMusicTable" {
     name           = "${var.dynamodb_table_name}"
     billing_mode   = "PROVISIONED"
     read_capacity  = 5
@@ -30,9 +30,10 @@ resource "aws_dynamodb_table" "bc_table" {
         type = "S"
     }
 
+
     tags = {
-      Name        = "dynamodb-table-1"
-      Environment = "bootcamp"
+      Name        = "var.dynamodb_table_tag_name"
+      Environment = "var.dynamodb_table_env_name"
     }
 }
 

@@ -6,15 +6,15 @@ variable "localstack_server" {
 variable "s3_bucket" {
   description = "Name s3 bucket resource"
   type        = string
-  default     = "bootcamp"
+  default     = "BootCampMusic"
 }
 variable "s3_bucket_tag_name" {
   description = "S3 bucket Tag Name"
   type        = string
-  default     = "bootcamp"
+  default     = "BootCampMusic"
 }
 variable "s3_bucket_tag_env" {
   description = "Environment Tag"
   type        = string
-  default     = "bootcamp"
+  default     = "dev"
 }
