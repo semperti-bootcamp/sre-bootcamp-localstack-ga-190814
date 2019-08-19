@@ -18,6 +18,8 @@ Checkear el s3 bucket creado
 
 aws s3 ls s3://NAMEBUCKET
 
+![alt tag](https://raw.githubusercontent.com/semperti-bootcamp/sre-bootcamp-ga-190814/s2a2-terraform/images/terraform-s3.png "terraform-s3.png")
+
 ## Generar la tabla DynamoDB con Terraform
 
 ```
@@ -62,44 +64,7 @@ is 0.12.6. You can update by downloading from www.terraform.io/downloads.html
 ```
 
 
-```
-Plan: 1 to add, 0 to change, 0 to destroy.
-
-Do you want to perform these actions?
-  Terraform will perform the actions described above.
-  Only 'yes' will be accepted to approve.
-
-  Enter a value: yes 
-
-aws_dynamodb_table.bc_table: Creating...
-  arn:                       "" => "<computed>"
-  attribute.#:               "" => "2"
-  attribute.1123762799.name: "" => "SongTitle"
-  attribute.1123762799.type: "" => "S"
-  attribute.733857137.name:  "" => "Artist"
-  attribute.733857137.type:  "" => "S"
-  billing_mode:              "" => "PROVISIONED"
-  hash_key:                  "" => "Artist"
-  name:                      "" => "MusicBootCamp"
-  point_in_time_recovery.#:  "" => "<computed>"
-  range_key:                 "" => "SongTitle"
-  read_capacity:             "" => "5"
-  server_side_encryption.#:  "" => "<computed>"
-  stream_arn:                "" => "<computed>"
-  stream_label:              "" => "<computed>"
-  stream_view_type:          "" => "<computed>"
-  tags.%:                    "" => "2"
-  tags.Environment:          "" => "bootcamp"
-  tags.Name:                 "" => "dynamodb-table-1"
-  write_capacity:            "" => "5"
-aws_dynamodb_table.bc_table: Creation complete after 1s (ID: MusicBootCamp)
-
-Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
-
-Outputs:
-
-dynamodb_table_name = MusicBootCamp
-```
+![alt tag](https://raw.githubusercontent.com/semperti-bootcamp/sre-bootcamp-ga-190814/s2a2-terraform/images/terraform-dynamodb.png "terraform-dynamodb.png")
 
 ## Paso 2. 
 
@@ -132,3 +97,31 @@ Los valores por deafult son:
 import-json-s3-dynamodb.sh [ json_file_name | default ] [ s3_bucket_name ]
 ```
 
+## Paso 3 Dump MySQL Server -> S3 Bucket
+
+Para realizar esta tarea tomé la base de datos remota del sprint 1 (mysql 5.6) que utilizamos para 
+la aplicacion Journals. El backup se realiza de manera remota, esto quierer decir que con credenciales
+de root desde la maquina local realiza el backup, lo aloja localmente en el directorio scripts/backups
+y luego toma el archivo descargado para subirlo al s3 bucket en localstack. Por defecto se utilizó esta
+base pero puede realizarse con cualquiera, cargando las variables de entorno del script o pasando o 
+pasando como parametro de la siguiente manera.
+
+```
+# Defults vars 
+MYSQL_SERVER=10.252.7.178
+MYSQL_USER=root
+MYSQL_PASS=semperti
+BKP_DIR="./backups"
+BKP_S3_BUCKET="s3://backup-mysql"
+BKP_DIR="./backups"
+BKP_FILE="full-backup-$(date +\%F).sql"
+```
+
+Ejecucion del script
+```
+backup-mysqld-to-s3.sh
+```
+
+El detalle de la ejecucion en estas capturas.
+
+![alt tag](https://raw.githubusercontent.com/semperti-bootcamp/sre-bootcamp-ga-190814/s2a2-terraform/images/script-import-export.png "script-import-export.png")

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-### BootCamp - Sprint 2 - Semperti
+### BootCamp Sprint 2 
 ### Detalle: Download from localstack s3 bucket to localhost 
 ### Autor: Gonzalo Acosta <gonzalo.acosta@semperti.com>
 ### Date: 201908
