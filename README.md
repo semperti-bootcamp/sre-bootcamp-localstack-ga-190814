@@ -18,7 +18,7 @@ Checkear el s3 bucket creado
 
 aws s3 ls s3://NAMEBUCKET
 
-![alt tag](https://raw.githubusercontent.com/semperti-bootcamp/sre-bootcamp-ga-190814/s2a2-terraform/images/terraform-s3.png "terraform-s3.png")
+![alt tag](https://raw.githubusercontent.com/semperti-bootcamp/sre-bootcamp-localstack-ga-190814/s2a2-terraform/images/terraform-s3.png "terraform-s3")
 
 ## Generar la tabla DynamoDB con Terraform
 
@@ -64,7 +64,8 @@ is 0.12.6. You can update by downloading from www.terraform.io/downloads.html
 ```
 
 
-![alt tag](https://raw.githubusercontent.com/semperti-bootcamp/sre-bootcamp-ga-190814/s2a2-terraform/images/terraform-dynamodb.png "terraform-dynamodb.png")
+![alt tag](https://raw.githubusercontent.com/semperti-bootcamp/sre-bootcamp-localstack-ga-190814/s2a2-terraform/images/terraform-dynamodb.png "terraform-dynamodb")
+
 
 ## Paso 2. 
 
@@ -124,4 +125,4 @@ backup-mysqld-to-s3.sh
 
 El detalle de la ejecucion en estas capturas.
 
-![alt tag](https://raw.githubusercontent.com/semperti-bootcamp/sre-bootcamp-ga-190814/s2a2-terraform/images/script-import-export.png "script-import-export.png")
+![alt tag](https://raw.githubusercontent.com/semperti-bootcamp/sre-bootcamp-localstack-ga-190814/s2a2-terraform/images/script-import-export.png "script-import-export")
