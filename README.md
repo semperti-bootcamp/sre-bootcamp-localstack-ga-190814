@@ -16,7 +16,7 @@ terraform apply
 
 Checkear el s3 bucket creado
 
-aws s3 ls s3://NAMEBUCKET
+aws s3 ls s3://BootCampMusic
 
 ![alt tag](https://raw.githubusercontent.com/semperti-bootcamp/sre-bootcamp-localstack-ga-190814/s2a2-terraform/images/terraform-s3.png "terraform-s3")
 
